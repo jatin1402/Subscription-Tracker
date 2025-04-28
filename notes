@@ -1,8 +1,3 @@
-# Subscription-Tracker
-This is the server-end code for creating a user-subscription model architecture.
-
-Come back for revision:
-
 nodemon: It always restart the server automatically once you make any change in  the code
 
 doing type: "module" in package.json: this will help us to get rid of old require syntax and we can use new ES6 syntax like import
