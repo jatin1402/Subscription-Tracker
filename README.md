@@ -1,64 +1,9 @@
 # Subscription-Tracker
+
 This is the server-end code for creating a user-subscription model architecture.
 
-Come back for revision:
+Help in sending email riminders to the users before 7, 5 ,3 ,1 days ahead of their subscription renewal dates.
 
-nodemon: It always restart the server automatically once you make any change in  the code
+Uses Nodejs/express and MongoDB, jwt authentication and bcrypt for password hashing.
 
-doing type: "module" in package.json: this will help us to get rid of old require syntax and we can use new ES6 syntax like import
-
-A linter will allow us to keep our code more clean so that we can do the development in more cleaner way;
-
-We want to make our server listen when we actually hit the specific route; that is done by app.listen; inside which goes the ort on which you want the server to listen
-
-Setting up the environment is very crucial, from where we can access our server. we dont want it to be restricted locally;
-
-Every route in the routes need to have its controller.
-
-After seeting up the routes, you need to get into database, make a new project in mongodb and install mongodb and mongoose (orm for mongodb, allowing you to create more easily database and schemas)
-
-
-now we have successfully setup the schemas, created models woith those, and then tried liking the models with each other in the the schemas, also learnt to create a function whcih will run before we save anything in the databse (pre);
-
-its time to handle the errors globally, by using a middleare: a middleware is a function which actually runs before/after a certain logic, they are used to handle responses before they are sent back to the client.
-
-
-
-//Database operations that update the state are atomic, either they work completely or they doesnt, Insert either works completely or it doesnt
-// reasons why operations may not work: 
-one or more contraint violated, 
-datatype mismatch, 
-syntax error
-
-Password hashing is a critical step in ensuring that sensitive user data, such as passwords, is stored securely in a database. We do it by using a library named bcrypt that genrates a salt to has the password.
-
-
-You don't need a transaction or session.startTransaction() in the signIn controller because no database write operations are being performed during the sign-in process. Transactions are typically used when you need to ensure the atomicity of multiple database write operations (e.g., creating or updating multiple documents).
-
-Protection of certain Routes:
-when we only want to allow specifc users to access any route, we need to AUTHORIZE them, by using a certain middleware that checks upon the jwt token mostly.
-
-For securing our Api's we use a 3rd party tool named Arcjet, that help us from too many spam request, invalid access and gives us bot protection;
-
-Rate limiting is like a rule that says you can make a certain number of calls in an interval and this will prevent people from making too many requests which can definitely slow down the servers and hinder other users interaction, for e.g. if suddenly all the customers in a coffee shop orders 500 cups of coffee, the system will definitely slow down or ight even break 
-
-ALright now time for creating subscription controllers: just try using authorisation since the req will contain that user after passing through that middleware, and you can use the user id from it to populate the schema model for subs
-
-A workflow is a message Queueing or a task scheduling system where a client/api-request trigger a speciifc workflow to happen, in our case we want to sechedule a lot of email reminders before the subscriber hit their subscription deadline 
-
-A demo workflow line of events:
-
-1. trigger the workflow: whenever a user cretaes a new subscription, we pass this sub Id to the workflo2
-2. Retrieve the sub: extraxts subId from the context and seacrh in DB
-3. Validation Check: 
-    -> If the sub does not exist, error is loogged and process terminates
-    -> else check the active status, if inactive we kill the process
-        -> if active, renewal date is calculated.
-4. Reminder date Calculation: 
-    -> If it is passed, g info and exit
-    -> f it's in future the system waits until that time and once it arrives, the reminder email is sent.
-5. Completetion: The process repeats for all the reminders in the list and then concludes.
-
-Using nodemailer can help us to send mails to potential customers.
-
-
+Also add the security features like rate limiting (too many atrempts) and bot detected to the routes through a third party tool Arcjet.
